@@ -1,4 +1,4 @@
-from langchain_groq  import ChatGroq
+from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 from agent.prompts import *
 from agent.states import *
@@ -9,18 +9,18 @@ from langchain.agents import create_agent
 
 
 load_dotenv()
-llm = ChatGroq(model ="openai/gpt-oss-120b")
+llm = ChatOpenAI(model="gpt-4o-mini")
 
 def planner_agent(state: dict)->dict:
   user_prompt =state['user_prompt']
-  resp =llm.with_structured_output(Plan).invoke(planner_prompt(user_prompt))
+  resp = llm.with_structured_output(Plan, method="function_calling").invoke(planner_prompt(user_prompt))
   if resp is None:
     raise ValueError("Planner did not return a valid response")
   return {"plan": resp}
 
 def architect_agent(state:dict)->dict:
   plan = state['plan']
-  resp = llm.with_structured_output(TaskPlan).invoke(architect_prompt(plan = plan.model_dump_json()))
+  resp = llm.with_structured_output(TaskPlan, method="function_calling").invoke(architect_prompt(plan = plan.model_dump_json()))
   if resp is None:
     raise ValueError("Architect did not return a valid response")
   resp.plan = plan
