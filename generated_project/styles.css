@@ -1,0 +1,121 @@
+/* Root variables for colors, font sizes, and spacing */
+:root {
+    /* Colors */
+    --color-bg: #f9f9f9;               /* Overall background */
+    --color-primary: #4a90e2;          /* Primary accent (hover/focus) */
+    --color-display-bg: #222222;      /* Display background */
+    --color-display-text: #ffffff;    /* Display text */
+    --color-btn-bg: #e0e0e0;           /* Default button background */
+    --color-btn-operator: #f0a500;    /* Operator buttons (+, -, *, /, = ) */
+    --color-btn-clear: #ff5c5c;        /* Clear (C) button */
+    --color-btn-back: #ffae42;         /* Backspace (←) button */
+    --color-btn-text: #000000;         /* Default button text */
+    --color-btn-text-inverse: #ffffff;/* Text on colored buttons */
+
+    /* Font sizes */
+    --font-size-base: 1rem;
+    --font-size-display: 2rem;
+    --font-size-btn: 1.2rem;
+
+    /* Spacing */
+    --spacing: 0.5rem;
+    --border-radius: 4px;
+}
+
+/* Calculator container */
+#calculator {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: var(--spacing);
+    background: var(--color-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Display area */
+.display {
+    height: 60px;
+    background: var(--color-display-bg);
+    color: var(--color-display-text);
+    font-size: var(--font-size-display);
+    text-align: right;
+    padding: var(--spacing);
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+}
+
+/* Buttons grid */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing);
+}
+
+/* Individual button */
+.btn {
+    font-size: var(--font-size-btn);
+    background: var(--color-btn-bg);
+    color: var(--color-btn-text);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.1s, color 0.2s;
+}
+
+.btn:hover,
+.btn:focus {
+    background: var(--color-primary);
+    color: var(--color-btn-text-inverse);
+    outline: none;
+    transform: translateY(1px);
+}
+
+/* Operator buttons (+, -, *, /, = ) */
+.btn[data-key="+"] ,
+.btn[data-key="-"] ,
+.btn[data-key="*"] ,
+.btn[data-key="/"] ,
+.btn[data-key="="] {
+    background: var(--color-btn-operator);
+    color: var(--color-btn-text-inverse);
+}
+
+/* Clear button */
+.btn[data-key="C"] {
+    background: var(--color-btn-clear);
+    color: var(--color-btn-text-inverse);
+}
+
+/* Backspace button */
+.btn[data-key="Backspace"] {
+    background: var(--color-btn-back);
+    color: var(--color-btn-text-inverse);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    #calculator {
+        max-width: 100%;
+        margin: 1rem;
+    }
+
+    .btn {
+        font-size: 1.5rem;
+        height: 80px;
+    }
+
+    .display {
+        font-size: 2.5rem;
+        height: 80px;
+    }
+}
